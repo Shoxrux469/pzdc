@@ -51,6 +51,7 @@ let bank = [
         ]
     },
     {
+
         name: "Shoxrux",
         budget: 40000,
         tax: 12,
@@ -71,29 +72,32 @@ let bank = [
     }
 ]
 
-let udachniye = []
 let neudachniye = []
+let udachniye = []
+let totalTax
 for(let item of bank) {
-    let wholeExpenses = 0
-    let taxExpenses = item.budget / item.tax
-    let allExpenses
+    let wholeExpenses
+    item.totalExp
+    item.taxExp = (item.budget / item.tax) / 12
+    totalTax = bank.reduce((a, b) => a.taxExp > b.taxExp ? a : b)
     let result
     for(let exp of item.expensesPerYear) {
-        wholeExpenses += exp.total
-        allExpenses = wholeExpenses + taxExpenses
-        result = (item.budget - allExpenses) / 12
-        if (result > 0) {
-            udachniye.push(result)
-        } else {
-            neudachniye.push(result)
-        }
+        // wholeExpenses += exp.total
+        wholeExpenses = item.expensesPerYear.reduce((a, b) => a + b.total, 0)
+        item.totalExp = wholeExpenses + item.taxExp
+        result = (item.budget - item.totalExp) / 12
     }
-    
-    // console.log(result);
-    // console.log(taxExpenses);
-    console.log(udachniye)
+    // console.log(item.taxExp);
+    if(result > 0) {
+        udachniye.push(item)
+    } else {
+        neudachniye.push(item)
+    }
+    // console.log(result)
+    console.log(item.totalExp) // 2
 }
+console.log(totalTax) // 1
+console.log(udachniye, neudachniye); // 3
 // 1. Найти кто больше всех платит налог
 // 2. Создать новый ключ компаниям (процент) Найти соотношение трат и сохранить его в новом ключе
 // 3. Вычитав все расходы включая налоги определить куда пушается компания в уд или не удачные если денег остается больше 0 то в уд меньше (не удачные)
-
