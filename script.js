@@ -88,7 +88,7 @@ for(let item of bank) {
         result = (item.budget - item.totalExp) / 12
     }
     // console.log(item.taxExp);
-    if(result > 0) {
+    if(result >= 0) {
         udachniye.push(item)
     } else {
         neudachniye.push(item)
